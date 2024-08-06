@@ -29,15 +29,11 @@ async function createBatatinha(req, res, next) {
 
 function validateInput(body) {
   if (!body.name) {
-    const error = new Error('Name cannot be empty');
-    error.status = 400;
-    throw error;
+    throw new BadRequestError('Name cannot be empty');
   }
 
   if (!body.cpf) {
-    const error = new Error('CPF cannot be empty');
-    error.status = 400;
-    throw error;
+   throw new BadRequestError('CPF cannot be empty');
   }
 }
 
