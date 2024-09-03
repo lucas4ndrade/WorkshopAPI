@@ -1,5 +1,3 @@
-
-
 class HttpError extends Error {
   constructor(message, status = 500) {
     super(message)
@@ -12,3 +10,8 @@ class BadRequestError extends HttpError {
     super(message, status);
   }
 }
+
+module.exports = {
+  BadRequestError,
+  HttpError,
+};

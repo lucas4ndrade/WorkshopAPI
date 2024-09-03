@@ -1,5 +1,5 @@
 const batatinhaRepo = require('../repositories/batatinha');
-
+const validateBatatinhaUseCase = require('../usecases/validateBatatinhaInput');
 
 function quandoNasceHandler(req, res, next) {
   console.log("QUANDO NASCE");
@@ -15,27 +15,16 @@ function esparramaHandler(req, res, next) {
 
 async function createBatatinha(req, res, next) {
   try {
-    console.log("SENDO CRIADA");
+    validateBatatinhaUseCase.execute(req.body);
 
-    validateInput(req.body);
+    const newBatata = await batatinhaRepo.create(req.body.name, req.body.cpf);
 
-    await batatinhaRepo.create(req.body.name, req.body.cpf);
-
-    res.status(200).json({});
+    res.status(200).json(newBatata);
   } catch (err) {
     next(err);
   }
 }
 
-function validateInput(body) {
-  if (!body.name) {
-    throw new BadRequestError('Name cannot be empty');
-  }
-
-  if (!body.cpf) {
-   throw new BadRequestError('CPF cannot be empty');
-  }
-}
 
 module.exports = {
   quandoNasceHandler,
